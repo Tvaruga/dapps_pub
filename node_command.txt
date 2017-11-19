@@ -1,0 +1,23 @@
+Web3 = require('web3')
+web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
+
+
+code = fs.readFileSync('wellcome.sol').toString()
+solc = require('solc')
+compiledCode = solc.compile(code)
+
+
+abiDefinition = JSON.parse(compiledCode.contracts[':WellcomeContract'].interface)
+WellcomeContract = web3.eth.contract(abiDefinition)
+byteCode = compiledCode.contracts[':WellcomeContract'].bytecode
+deployedContract = WellcomeContract.new({data: byteCode, from: web3.eth.accounts[0], gas: 300000})
+
+deployedContract.address
+
+
+
+contractInstance = WellcomeContract.at(deployedContract.address)
+
+contractInstance.wellcomeString()
+
+contractInstance.setWellcomeString("Hello, world", {from: web3.eth.accounts[0], gas: 300000})
