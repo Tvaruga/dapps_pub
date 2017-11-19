@@ -21,3 +21,7 @@ contractInstance = WellcomeContract.at(deployedContract.address)
 contractInstance.wellcomeString()
 
 contractInstance.setWellcomeString("Hello, world", {from: web3.eth.accounts[0], gas: 300000})
+
+
+
+contractInstance.mint(0x1F095f88fBc93011C148244CE85CCA5aAff7E5eb, 100000000000000000000,{from: web3.eth.accounts[0], gas: 300000});
